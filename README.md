@@ -18,5 +18,5 @@ the development enviroment that will be used is android studio:
 
 ##rules
 
-*do not work in master branch
-*do not fuck up the master branch when merging or rebasing 
+* do not work in master branch
+* do not fuck up the master branch when merging or rebasing 
