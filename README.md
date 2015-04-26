@@ -1,8 +1,6 @@
 # Chicken farm
 
 This README outlines the details of collaborating on the ChickenWork
-## Prerequisites
-
 
 
 ## Installation
