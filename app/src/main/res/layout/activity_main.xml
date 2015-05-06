@@ -33,16 +33,8 @@
         android:id="@+id/btnLogin"
         android:layout_below="@+id/txtTitle"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Scan Location"
-        android:id="@+id/btnScan"
-        android:layout_marginTop="36dp"
-        android:layout_below="@+id/btnLogin"
-        android:layout_centerHorizontal="true" />
+        android:layout_marginTop="40dp"
+        android:onClick="onClick" />
 
     <Button
         android:layout_width="wrap_content"
@@ -50,8 +42,9 @@
         android:text="Write"
         android:id="@+id/btnWrite"
         android:layout_marginTop="47dp"
-        android:layout_below="@+id/btnScan"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="onClick"
+        android:layout_below="@+id/btnLogin" />
 
     <Button
         android:layout_width="wrap_content"
@@ -60,6 +53,20 @@
         android:id="@+id/btnMap"
         android:layout_marginTop="52dp"
         android:layout_below="@+id/btnWrite"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="onClick" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Scan Tag a to View Message and Save Location"
+        android:id="@+id/textView3"
+        android:layout_marginTop="50dp"
+        android:textSize="19dp"
+        android:gravity="center_horizontal"
+        android:layout_below="@+id/btnMap"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

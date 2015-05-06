@@ -1,12 +1,15 @@
 package nz.ac.aut.dms.chickenwork;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements OnClickListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,5 +38,23 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId() == R.id.btnLogin)
+        {
+            System.out.println("Login");
+        }
+        else if(v.getId() == R.id.btnWrite)
+        {
+            System.out.println("Write");
+            Intent intent = new Intent(this.getBaseContext(), WriterActivity.class);
+            startActivity(intent);
+        }
+        else if(v.getId() == R.id.btnMap)
+        {
+            System.out.println("Map");
+        }
     }
 }
