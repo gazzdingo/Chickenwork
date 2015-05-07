@@ -78,8 +78,7 @@ public class DisplayActivity extends Activity implements View.OnClickListener{
 
                     // Execute HTTP Post Request
                     HttpResponse responce = httpclient.execute(httppost);
-                    System.out.println();
-                    System.out.println(lon);
+
 
                 } catch (IOException e) {
                     // TODO Auto-generated catch block

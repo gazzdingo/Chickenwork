@@ -2,11 +2,26 @@ package nz.ac.aut.dms.chickenwork;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.JsonReader;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class MapsActivity extends FragmentActivity {
 
@@ -16,8 +31,49 @@ public class MapsActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
         setUpMapIfNeeded();
+
     }
+
+    private void readInData() {
+        String jsonString = null;
+        try {
+             jsonString = httpGet("http://langford-lee.com:8080/c/getlocation");
+            JSONArray array = new JSONArray(jsonString);
+            for (int i = 0; i < array.length();i++){
+                JSONObject obj = array.getJSONObject(i);
+               String lat =  obj.getString("lat");
+               String lon =  obj.getString("lat");
+                double latDouble = Double.parseDouble(lat);
+                double lonDouble = Double.parseDouble(lon);
+                addPin(latDouble,lonDouble);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private String httpGet(String uri) throws IOException, URISyntaxException {
+        HttpClient httpclient = new DefaultHttpClient();
+
+        HttpGet request = new HttpGet();
+        URI website = new URI(uri);
+        request.setURI(website);
+        HttpResponse response = httpclient.execute(request);
+        BufferedReader in = new BufferedReader(new InputStreamReader(
+                response.getEntity().getContent()));
+
+        String temp = null;
+        String content = null;
+        while(( temp = in.readLine()) != null)
+         content += temp;
+        return content;
+    }
+
+
 
     @Override
     protected void onResume() {
@@ -48,7 +104,7 @@ public class MapsActivity extends FragmentActivity {
                     .getMap();
             // Check if we were successful in obtaining the map.
             if (mMap != null) {
-                setUpMap();
+                readInData();
             }
         }
     }
@@ -59,7 +115,7 @@ public class MapsActivity extends FragmentActivity {
      * <p/>
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
-    private void setUpMap() {
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+    private void addPin(Double lat,Double lon) {
+        mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title("Marker"));
     }
 }
