@@ -18,18 +18,19 @@ public class DisplayActivity extends Activity implements View.OnClickListener{
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_display);
-		textView = (TextView)findViewById(R.id.tagDisplay);
-		Intent intent = getIntent();
-		//Check mime type, get ndef message  from intent and display the message in text view
-        if(intent.getType() != null && intent.getType().equals("text/plain")) {
-        	Parcelable[] rawMsgs = getIntent().getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_display);
+        textView = (TextView) findViewById(R.id.tagDisplay);
+        Intent intent = getIntent();
+        //Check mime type, get ndef message  from intent and display the message in text view
+        if (intent.getType() != null && intent.getType().equals("text/plain")) {
+            Parcelable[] rawMsgs = getIntent().getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
             NdefMessage msg = (NdefMessage) rawMsgs[0];
             NdefRecord record = msg.getRecords()[0];
             String message = new String(record.getPayload());
             textView.setText(message);
         }
+    }
 
 
 	@Override
