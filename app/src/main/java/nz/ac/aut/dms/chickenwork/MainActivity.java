@@ -42,11 +42,8 @@ public class MainActivity extends ActionBarActivity implements OnClickListener{
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.btnLogin)
-        {
-            System.out.println("Login");
-        }
-        else if(v.getId() == R.id.btnWrite)
+
+        if(v.getId() == R.id.btnWrite)
         {
             System.out.println("Write");
             Intent intent = new Intent(this.getBaseContext(), WriterActivity.class);
@@ -54,7 +51,8 @@ public class MainActivity extends ActionBarActivity implements OnClickListener{
         }
         else if(v.getId() == R.id.btnMap)
         {
-            System.out.println("Map");
+            Intent intent = new Intent(this.getBaseContext(), MapsActivity.class);
+            startActivity(intent);
         }
     }
 }
