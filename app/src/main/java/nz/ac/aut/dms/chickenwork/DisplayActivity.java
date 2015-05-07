@@ -70,7 +70,6 @@ public class DisplayActivity extends Activity implements View.OnClickListener{
                     String lat = String.valueOf(locationGPS.getLatitude());
                     String lon = String.valueOf(locationGPS.getLongitude());
 
-
                     // Add your data
                     List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
                     nameValuePairs.add(new BasicNameValuePair("lat", lat));
@@ -92,4 +91,4 @@ public class DisplayActivity extends Activity implements View.OnClickListener{
 
         }
 	}
-}
+
