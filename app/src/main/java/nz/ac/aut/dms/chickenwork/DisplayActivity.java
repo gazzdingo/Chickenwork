@@ -1,5 +1,6 @@
 package nz.ac.aut.dms.chickenwork;
 
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.nfc.NdefMessage;
@@ -61,29 +62,48 @@ public class DisplayActivity extends Activity implements View.OnClickListener{
             StrictMode.ThreadPolicy p = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(p);
             LocationManager locationManager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
+
+            Criteria criteria = new Criteria();
+            criteria.setAccuracy(Criteria.ACCURACY_FINE);   //default
+
+            // user defines the criteria
+
+            criteria.setCostAllowed(false);
+            // get the best provider depending on the criteria
+            String provider = locationManager.getBestProvider(criteria, false);
+
+
+
+
+
             if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                Location locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                Location location = locationManager.getLastKnownLocation(provider);
+                      if(location == null){
+                          Toast.makeText(this,"could not find your location", Toast.LENGTH_LONG).show();
+                      }else {
+                          double longitude = location.getLongitude();
+                          double latitude = location.getLatitude();
+                          HttpClient httpclient = new DefaultHttpClient();
+                          HttpPost httppost = new HttpPost("http://langford-lee.com:8080/c/addlocation");
 
-                HttpClient httpclient = new DefaultHttpClient();
-                HttpPost httppost = new HttpPost("http://langford-lee.com:8080/c/addlocation");
-
-                try {
-                    String lat = String.valueOf(locationGPS.getLatitude());
-                    String lon = String.valueOf(locationGPS.getLongitude());
-
-                    // Add your data
-                    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-                    nameValuePairs.add(new BasicNameValuePair("lat", lat));
-                    nameValuePairs.add(new BasicNameValuePair("lon", lon));
-                    httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                    // Execute HTTP Post Request
-                    HttpResponse responce = httpclient.execute(httppost);
+                          try {
 
 
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                }
+                              String lat = String.valueOf(latitude);
+                              String lon = String.valueOf(longitude);
+
+                              List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                              nameValuePairs.add(new BasicNameValuePair("lat", lat));
+                              nameValuePairs.add(new BasicNameValuePair("lon", lon));
+                              httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+                              HttpResponse responce = httpclient.execute(httppost);
+
+
+                          } catch (IOException e) {
+                              // TODO Auto-generated catch block
+                          }
+                      }
             }else{
                 Toast.makeText(this, "GPS Must Be Off turn it on and Try Again", Toast.LENGTH_LONG).show();
             }
