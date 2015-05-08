@@ -2,6 +2,7 @@ package nz.ac.aut.dms.chickenwork;
 
 import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
@@ -27,7 +28,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DisplayActivity extends Activity implements View.OnClickListener{
+public class DisplayActivity extends Activity implements View.OnClickListener, LocationListener{
 
 
 	private TextView textView;
@@ -72,14 +73,12 @@ public class DisplayActivity extends Activity implements View.OnClickListener{
             // get the best provider depending on the criteria
             String provider = locationManager.getBestProvider(criteria, false);
 
-
-
-
-
             if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                locationManager.requestLocationUpdates(provider, 0, 0, this);
                 Location location = locationManager.getLastKnownLocation(provider);
+
                       if(location == null){
-                          Toast.makeText(this,"could not find your location", Toast.LENGTH_LONG).show();
+                          Toast.makeText(this,"Could not find your location", Toast.LENGTH_LONG).show();
                       }else {
                           double longitude = location.getLongitude();
                           double latitude = location.getLatitude();
@@ -110,5 +109,25 @@ public class DisplayActivity extends Activity implements View.OnClickListener{
         }
 
         }
-	}
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
+}
 

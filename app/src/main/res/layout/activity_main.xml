@@ -16,16 +16,6 @@
         android:layout_alignParentStart="true"
         android:id="@+id/txtTitle" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Not Logged In"
-        android:id="@+id/txtLoginInfo"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
 
     <Button
         android:layout_width="wrap_content"
@@ -52,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Scan Tag a to View Message and Save Location"
+        android:text="Scan a Tag to View Message and Save Location"
         android:id="@+id/textView3"
         android:textSize="19dp"
         android:gravity="center_horizontal"
