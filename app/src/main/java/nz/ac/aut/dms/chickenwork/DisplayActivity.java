@@ -58,11 +58,12 @@ public class DisplayActivity extends Activity implements View.OnClickListener{
 		}
 
         if(view.getId() == R.id.btnSaveLocation){
+            StrictMode.ThreadPolicy p = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(p);
             LocationManager locationManager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
             if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 Location locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                StrictMode.ThreadPolicy p = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-                StrictMode.setThreadPolicy(p);
+
                 HttpClient httpclient = new DefaultHttpClient();
                 HttpPost httppost = new HttpPost("http://langford-lee.com:8080/c/addlocation");
 

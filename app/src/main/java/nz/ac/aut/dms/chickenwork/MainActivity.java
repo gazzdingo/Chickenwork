@@ -45,8 +45,10 @@ public class MainActivity extends ActionBarActivity implements OnClickListener{
 
         if(v.getId() == R.id.btnWrite)
         {
-            System.out.println("Write");
-            Intent intent = new Intent(this.getBaseContext(), WriterActivity.class);
+//            System.out.println("Write");
+//            Intent intent = new Intent(this.getBaseContext(), WriterActivity.class);
+//            startActivity(intent);
+             Intent intent = new Intent(this.getBaseContext(), DisplayActivity.class);
             startActivity(intent);
         }
         else if(v.getId() == R.id.btnMap)

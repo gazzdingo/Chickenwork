@@ -1,5 +1,6 @@
 package nz.ac.aut.dms.chickenwork;
 
+import android.os.StrictMode;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.JsonReader;
@@ -33,6 +34,8 @@ public class MapsActivity extends FragmentActivity {
         setContentView(R.layout.activity_maps);
 
         setUpMapIfNeeded();
+        readInData();
+
 
     }
 
@@ -42,12 +45,12 @@ public class MapsActivity extends FragmentActivity {
              jsonString = httpGet("http://langford-lee.com:8080/c/getlocation");
             JSONArray array = new JSONArray(jsonString);
             for (int i = 0; i < array.length();i++){
-                JSONObject obj = array.getJSONObject(i);
+               JSONObject obj = array.getJSONObject(i);
                String lat =  obj.getString("lat");
-               String lon =  obj.getString("lat");
-                double latDouble = Double.parseDouble(lat);
-                double lonDouble = Double.parseDouble(lon);
-                addPin(latDouble,lonDouble);
+               String lon =  obj.getString("lon");
+               double latDouble = Double.parseDouble(lat);
+               double lonDouble = Double.parseDouble(lon);
+               addPin(latDouble,lonDouble);
             }
 
         } catch (Exception e) {
@@ -57,6 +60,9 @@ public class MapsActivity extends FragmentActivity {
     }
 
     private String httpGet(String uri) throws IOException, URISyntaxException {
+
+        StrictMode.ThreadPolicy p = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(p);
         HttpClient httpclient = new DefaultHttpClient();
 
         HttpGet request = new HttpGet();
@@ -67,7 +73,7 @@ public class MapsActivity extends FragmentActivity {
                 response.getEntity().getContent()));
 
         String temp = null;
-        String content = null;
+        String content = "";
         while(( temp = in.readLine()) != null)
          content += temp;
         return content;
@@ -104,7 +110,6 @@ public class MapsActivity extends FragmentActivity {
                     .getMap();
             // Check if we were successful in obtaining the map.
             if (mMap != null) {
-                readInData();
             }
         }
     }
